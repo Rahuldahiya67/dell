@@ -1,0 +1,262 @@
+1) LED ON
+void setup() {
+// put your setup code here, to run once:
+pinMode(13,OUTPUT);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+digitalWrite(13,HIGH);
+}
+
+
+2) LED OFF
+void setup() {
+// put your setup code here, to run once:
+pinMode(13,OUTPUT);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+digitalWrite(13,LOW);
+}
+
+
+3) LED BLINK
+the setup function runs once when you press reset or power the
+board
+void setup() {
+// initialize digital pin LED_BUILTIN as an output.( LED_BUILTIN
+is 13th pin )
+pinMode(LED_BUILTIN, OUTPUT);
+}
+// the loop function runs over and over again forever
+void loop() {
+digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is
+the voltage level)
+delay(1000); // wait for a second
+digitalWrite(LED_BUILTIN, LOW); // turn the LED off by
+making the voltage LOW
+delay(1000); // wait for a second
+}
+
+
+4) TWO LEDS BLINKING SIMULTANEOUSLY
+void setup(){
+pinMode(11,OUTPUT);
+pinMode(12,OUTPUT);
+}
+void loop(){
+digitalWrite(11,LOW);
+digitalWrite(12,HIGH);
+delay(500);
+digitalWrite(11,HIGH);
+digitalWrite(12,LOW);
+delay(500);
+}
+
+
+5) IR sensor_Digital read
+#define pin A0
+boolean data;
+void setup() {
+pinMode(pin,INPUT);
+Serial.begin(9600);
+}
+void loop() {
+data=digitalRead(pin);
+Serial.println(data);
+delay(1000);
+}
+
+
+6) IR sensor_Analog read
+#define pin A0
+int data;
+void setup() {
+pinMode(pin,INPUT);
+Serial.begin(9600);
+}
+void loop() {
+data=analogRead(pin);
+Serial.println(data);
+delay(1000);
+}
+
+
+7) IR sensor_Analog read_if condition
+#define pin A0
+#define led 13
+boolean data;
+boolean LED=0;
+void setup() {
+pinMode(pin,INPUT);
+pinMode(led,OUTPUT);
+Serial.begin(9600);
+}
+void loop() {
+data=digitalRead(pin);
+if(data==0&&LED==0)
+{
+digitalWrite(led,HIGH);
+LED=1;
+delay(1000);
+}
+else if(data==0&&LED==1)
+{
+digitalWrite(led,LOW);
+LED=0;
+delay(1000);
+}
+
+
+8) IR SENSOR
+int statusLED;
+void setup() {
+// put your setup code here, to run once:
+pinMode(2,INPUT);
+pinMode(13, OUTPUT);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+int StatusLED= digitalRead(2);
+if(StatusLED==LOW)
+digitalWrite(13,HIGH);
+else
+digitalWrite(13,LOW);
+}
+
+
+9) HC SR04 ULTRASONIC SENSOR USING SERIAL MONITOR
+#define trigpin 10
+#define echopin 11
+float duration;
+float distance;
+void setup() {
+// put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(trigpin,OUTPUT);
+pinMode(echopin,INPUT);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+digitalWrite(trigpin,HIGH);
+delay(10);
+digitalWrite(trigpin,LOW);
+duration= pulseIn(echopin, HIGH);
+distance=(duration/2)*0.034;
+Serial.print("Distance: ");
+Serial.print(distance);
+Serial.println(" cm");
+delay(250);
+}
+
+
+10) IF condition_2 Leds
+#define trigpin 10
+#define echopin 11
+#define red_pin A1
+#define blue_pin A0
+float duration;
+float distance;
+void setup() {
+Serial.begin(9600);
+pinMode(trigpin,OUTPUT);
+pinMode(echopin,INPUT);
+pinMode(red_pin,OUTPUT);
+pinMode(blue_pin,OUTPUT);
+digitalWrite(red_pin,LOW);
+digitalWrite(blue_pin,LOW);
+}
+void loop() {
+digitalWrite(trigpin,HIGH);
+delay(10);
+digitalWrite(trigpin,LOW);
+duration=pulseIn(echopin,HIGH);
+distance=(duration/2)*0.034;
+Serial.print(distance);
+Serial.println(" cm");
+if(distance<=15)
+{
+digitalWrite(red_pin,HIGH);
+digitalWrite(blue_pin,LOW);
+}
+else
+{
+digitalWrite(red_pin,LOW);
+digitalWrite(blue_pin,HIGH);
+}
+}
+
+
+11) TEMPERATURE AND HUMIDITY SENSOR(DHT 11)
+#include <DHT.h>
+#define DHTPIN 2
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+float hum;
+float temp;
+void setup()
+{
+Serial.begin(9600);
+dht.begin();
+}
+void loop()
+{
+hum = dht.readHumidity();
+temp= dht.readTemperature();
+Serial.print("Humidity: ");
+Serial.print(hum);
+Serial.print(" %, Temp: ");
+Serial.print(temp);
+Serial.println(" Celsius");
+delay(5000);
+
+
+12) KEYPAD
+#include <Keypad.h>
+const byte ROWS=4;
+const byte COLS=4;
+char Keys [ROWS][COLS]= {
+{'1', '2', '3', 'A'},
+{'4', '5', '6', 'B'},
+{'7', '8', '9', 'C'},
+{'*', '0', '#', 'D'}
+};
+byte rowPin[ROWS]={13,12,11,10};
+byte colPin[COLS]={9,8,7,6};
+Keypad myKeypad= Keypad(makeKeymap(Keys), rowPin, colPin,
+ROWS,COLS);
+void setup() {
+// put your setup code here, to run once:
+Serial.begin(9600);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+char readKey=myKeypad.getKey();
+if(readKey)
+{
+Serial.println(readKey);
+}
+}
+
+
+13) Servo motor
+#include<Servo.h>
+Servo servo1;
+void setup() {
+// put your setup code here, to run once:
+servo1.attach(9);
+//servo1.attach(8);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+servo1.write(0);
+delay(1000);
+servo1.write(45);
+delay(1000);
+servo1.write(90);
+delay(1000);
+servo1.write(180);
+delay(1000);
+servo1.write(0);
+delay(1000);
+}
